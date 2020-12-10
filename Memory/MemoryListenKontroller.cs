@@ -125,7 +125,7 @@ namespace Memory
             {
                 KachelnSperren();
                 Console.WriteLine("wait");
-                await Task.Delay(2000);
+                await Task.Delay(500);
                 if(AufgedeckteKacheln[0].aufgedecktBildUrl == AufgedeckteKacheln[1].aufgedecktBildUrl)
                 {
                      ToggleEventArgs args = new ToggleEventArgs() { Punkt = true, Kachel = AufgedeckteKacheln[0]};

@@ -44,7 +44,7 @@ namespace Memory
                 urls.Add(file.FullName);
             }
 
-            MemorieKontroller = new MemoryListenKontroller(memoriePanel, urls.Skip(1).ToList(), urls[0], 100, 5);
+            MemorieKontroller = new MemoryListenKontroller(memoriePanel, urls.Skip(1).ToList(), urls[0], 100, 8);
             MemorieKontroller.SPIELER_FERTIG_EVENT += (o, ee) =>
             {
                 if(ee.Punkt)
@@ -58,7 +58,15 @@ namespace Memory
                     this.comboBox1.SelectedItem = spielKontroller.ActivePlayer;
                 }
                 this.lblPunkteStandanzeigen.Text = $"Spieler {spielKontroller.ActivePlayer.name} hat {spielKontroller.ActivePlayer.Kacheln.Count} Punkte";
-
+                panelPunkte.Controls.Clear();
+                var list = new List<PictureBox>();
+                spielKontroller.ActivePlayer.Kacheln.ForEach(k => list.Add(new PictureBox() 
+                {
+                    ImageLocation = k.ImageLocation,
+                    Width = 100, Height = 100 ,
+                    Margin= new Padding(5,5,5,5),
+                    SizeMode=PictureBoxSizeMode.StretchImage}));
+                panelPunkte.Controls.AddRange(list.ToArray());
 
             };
         }

@@ -35,5 +35,14 @@ namespace Memory
                 nameInput.Text = "";
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(listspieler.Items.Count == 0)
+            {
+                return;
+            }
+            this.Close();
+        }
     }
 }

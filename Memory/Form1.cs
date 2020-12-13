@@ -28,6 +28,11 @@ namespace Memory
             startSpielForm = new FormStartGame();
             startSpielForm.StartPosition = FormStartPosition.CenterParent;
             startSpielForm.ShowDialog();
+            if(!startSpielForm.Startgame)
+            {
+                Application.Exit();
+                return;
+            }
 
             List<Player> player = new List<Player>();
 
@@ -65,8 +70,24 @@ namespace Memory
                     ImageLocation = k.ImageLocation,
                     Width = 100, Height = 100 ,
                     Margin= new Padding(5,5,5,5),
-                    SizeMode=PictureBoxSizeMode.StretchImage}));
+                    SizeMode=PictureBoxSizeMode.StretchImage
+                }));
                 panelPunkte.Controls.AddRange(list.ToArray());
+
+                if(MemorieKontroller.UebrigeKacheln.Count == 0)
+                {
+                    if(MessageBox.Show($"{spielKontroller.Player.OrderBy(k => k.Kacheln.Count).First().name} hat gewonnen. Wollen Sie nochmal spielen?" ,
+                        "Spielende",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        spielKontroller.Player.ForEach(k => k.Kacheln.Clear());
+                        MemorieKontroller.Startgame();
+                        panelPunkte.Controls.Clear();
+                        this.lblPunkteStandanzeigen.Text = $"Spieler {spielKontroller.ActivePlayer.name} hat {spielKontroller.ActivePlayer.Kacheln.Count} Punkte";
+
+                    }
+                }
 
             };
         }

@@ -26,6 +26,7 @@ namespace Memory
             }
             return namen;
         }
+        public bool Startgame { get; set; } = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -42,6 +43,7 @@ namespace Memory
             {
                 return;
             }
+            Startgame = true;
             this.Close();
         }
     }

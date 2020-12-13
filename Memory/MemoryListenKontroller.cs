@@ -23,7 +23,7 @@ namespace Memory
         List<string> BildUrls { get; set; }
         string ZugedecktUrl { get; set; }
 
-        List<MemoryKachel> Kacheln = new List<MemoryKachel>();
+        public List<MemoryKachel> Kacheln { get; set; } = new List<MemoryKachel>();
 
         int ColumnWidth { get; set; }
 
@@ -51,6 +51,13 @@ namespace Memory
                 return this.Kacheln.Where(k => !k.istAufgedeckt).ToList();
             }
         }
+        public List<MemoryKachel> UebrigeKacheln
+        {
+            get
+            {
+                return this.Kacheln.Where(k => !k.isAusSpielgenommen).ToList();
+            }
+        }
         public MemoryListenKontroller(Control panel, List<string> bildUrls, string ZugedecktUrl, int kachelWeite, int columnWidth)
         {
             this.panel = panel;
@@ -58,7 +65,11 @@ namespace Memory
             this.ZugedecktUrl = ZugedecktUrl;
             this.KachelWeite = kachelWeite;
             this.ColumnWidth = columnWidth;
-
+            Startgame();
+         
+        }
+        public void Startgame()
+        {
             KachelnErstellen();
             Shuffle(this.Kacheln);
             this.KachelnAnzeigen();
@@ -66,6 +77,7 @@ namespace Memory
 
         private void KachelnErstellen()
         {
+            this.Kacheln.Clear();
             this.BildUrls.ForEach(k =>
             {
                 this.Kacheln.Add(new MemoryKachel(k, this.ZugedecktUrl, this.KachelWeite));
